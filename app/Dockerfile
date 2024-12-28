@@ -17,13 +17,16 @@ RUN add-apt-repository ppa:deadsnakes/ppa -y \
 
 WORKDIR /app
 
-COPY package.json ./
+COPY ./app/package*.json /app/
 
 RUN npm install
 
-COPY .. .
+COPY ./app /app
+
+RUN cd whisper &&  \
+    pip install -r requirements.txt &&  \
+    python3 whisper_entry_point.py
 
 EXPOSE 4000
 
-CMD ["npm", "start"]
-
+CMD ["npm", "run", "dev"]
