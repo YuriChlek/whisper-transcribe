@@ -1,0 +1,35 @@
+.wrapper {
+    padding-bottom: 10px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-input,
+.form-input-ip,
+.form-input-port {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-input-ip {
+    flex: 1;
+}
+
+.form-input-port {
+    max-width: 100px;
+}
+
+.form-button-wrapper {
+    display: flex;
+    gap: 10px;
+}
+
+.form-address-wrapper {
+    display: flex;
+    gap: 10px;
+}

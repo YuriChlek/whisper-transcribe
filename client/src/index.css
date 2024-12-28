@@ -1,0 +1,66 @@
+:root {
+    /* Змінні кольорів */
+    --primary-color: #646cff;
+    --primary-hover-color: #474ece;
+    --button-hover-color: #7a85ff;
+    --button-bg-color: #1a1a1a;
+    --button-border-hover-color: var(--primary-color);
+
+    /* Змінні шрифтів */
+    --font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    --font-size-h1: 3.2em;
+
+    /* Інші змінні */
+    --line-height: 1.5;
+    --font-weight: 400;
+    --spacing-root: 2rem;
+
+    font-family: var(--font-family);
+    line-height: var(--line-height);
+    font-weight: var(--font-weight);
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    place-items: center;
+    min-width: 320px;
+    min-height: 100vh;
+}
+
+h1 {
+    font-size: 3.2em;
+    line-height: 1.1;
+}
+
+button {
+    border-radius: 8px;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+    transition: background-color 0.25s ease-in-out;
+}
+button:hover {
+    border-color: var(--primary-color);
+    background-color: var(--button-hover-color);
+}
+button:focus,
+button:focus-visible {
+    outline: none;
+}
+
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}

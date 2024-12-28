@@ -1,0 +1,6 @@
+flask[async]
+waitress
+openai-whisper
+pysmb
+ffmpeg
+torch

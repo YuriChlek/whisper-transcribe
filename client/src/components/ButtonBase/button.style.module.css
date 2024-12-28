@@ -1,0 +1,11 @@
+.form-button {
+    padding: 10px;
+    border-radius: 4px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    flex-grow: 1;
+    flex-shrink: 1;
+}

@@ -1,0 +1,12 @@
+host: "172.28.62.229",
+port: 3306,
+user: "root",
+password: "root",
+database: "trinity"
+
+
+DB_HOST="172.28.62.229"
+DB_PORT=3306
+DB_USER="root"
+DB_PASSWORD="root"
+DB_DATABASE="trinity"
