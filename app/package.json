@@ -5,7 +5,7 @@
     "main": "src/index.ts",
     "scripts": {
         "copy_files": "mkdir -p build/whisper && cp -r whisper/* build/whisper && cp .env build/.env",
-        "build": "npm run copy_files && tsc && babel build --out-dir build",
+        "build": "tsc && babel build --out-dir build",
         "dev": "nodemon -r tsconfig-paths/register src/index.ts",
         "start": "node -r tsconfig-paths/register build/src/index.js",
         "format": "prettier --write './**/*.{js,mjs,jsx,ts,tsx,css,scss,json}'"
