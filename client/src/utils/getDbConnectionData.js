@@ -1,9 +1,7 @@
 import fetchData from "./fetchData";
-import type { DBConnectionData } from "../types/frontend_types";
-
-const getDbConnectionData = async (): Promise<DBConnectionData> => {
+const getDbConnectionData = async () => {
     try {
-        const a = await fetchData<DBConnectionData>("/get_db_connection_data");
+        const a = await fetchData("/get_db_connection_data");
         console.log(a);
         return a;
     } catch (error) {
@@ -14,5 +12,4 @@ const getDbConnectionData = async (): Promise<DBConnectionData> => {
         throw new Error("Unexpected error");
     }
 };
-
 export default getDbConnectionData;

@@ -4,6 +4,11 @@ import { Id, ToastContainer, toast } from "react-toastify";
 import validateDBConnectionData from "../../utils/validateDbConnecrionData";
 import styles from "./styles.module.css";
 import ButtonBase from "../ButtonBase/ButtonBase";
+import {
+    CheckConnectionResponse,
+    DBConnectionData,
+    DbConnectionResponse,
+} from "../../types/frontend_types";
 
 const DBConnectionForm: React.FC = () => {
     const [host, setHost] = useState("");
@@ -30,8 +35,15 @@ const DBConnectionForm: React.FC = () => {
     const sendFormData: (sendUrl: string) => void = (sendUrl: string): void => {
         const loadingToastId: Id = toast.loading("Зачекайте, обробляємо запит...");
 
-        fetchData(sendUrl, { host, port, user, password, database })
+        fetchData<CheckConnectionResponse>(sendUrl, {
+            host,
+            port,
+            user,
+            password,
+            database,
+        })
             .then((response) => {
+                console.log(response);
                 if (response.success) {
                     updateMessage(loadingToastId, "success", response.message);
                 } else {
@@ -56,13 +68,13 @@ const DBConnectionForm: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchData("/get_db_connection_data").then((res) => {
-            const data = res.data;
+        fetchData<DbConnectionResponse>("/get_db_connection_data").then((res) => {
+            const data: DBConnectionData = res.data;
             setHost(data.host);
-            setPort(data.port);
+            setPort(String(data.port));
             setUser(data.user);
-            setPassword(data.password);
-            setDatabase(data.database);
+            setPassword(data.password || "");
+            setDatabase(data.database || "");
         });
     }, []);
 

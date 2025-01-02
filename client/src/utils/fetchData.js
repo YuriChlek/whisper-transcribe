@@ -1,7 +1,4 @@
-const fetchData = async <T>(
-    url: string,
-    data?: Record<string, string | number>,
-): Promise<T> => {
+const fetchData = async (url, data) => {
     try {
         const response = await fetch(`http://localhost:4000${url}`, {
             method: "POST",
@@ -14,12 +11,10 @@ const fetchData = async <T>(
                   })
                 : null,
         });
-
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
-        return (await response.json()) as T;
+        return await response.json();
     } catch (error) {
         if (error instanceof Error) {
             throw error;
@@ -27,5 +22,4 @@ const fetchData = async <T>(
         throw new Error("Unexpected error");
     }
 };
-
 export default fetchData;
