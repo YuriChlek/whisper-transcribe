@@ -12,4 +12,5 @@ if len(sys.argv) >= 2:
 # Виведення лише тексту та мови
     print(f'{{"text": "{result["text"]}", "language": "{result["language"]}"}}')
 
-else print('file path not found')
+else:
+    print('file path not found')

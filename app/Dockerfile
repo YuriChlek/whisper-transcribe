@@ -1,32 +1,25 @@
-FROM ubuntu:latest
+FROM python:3.10-slim
 
 RUN apt-get update && apt-get install -y \
     curl \
-    wget \
-    software-properties-common \
-    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g npm@latest
-
-RUN add-apt-repository ppa:deadsnakes/ppa -y \
-    && apt-get update && apt-get install -y python3.10 python3.10-distutils \
-    && curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
 
 WORKDIR /app
 
-COPY ./app/package*.json /app/
+COPY ./app/package*.json ./
 
 RUN npm install
 
-COPY ./app /app
+COPY ./app ./
 
-RUN cd whisper &&  \
-    pip install -r requirements.txt &&  \
-    python3 whisper_entry_point.py
+WORKDIR /app/whisper
+
+RUN pip install -r requirements.txt
+RUN python whisper_entry_point.py
 
 EXPOSE 4000
 
-CMD ["npm", "run", "dev"]
+CMD ["sh", "-c", "npm run build && npm run start"]

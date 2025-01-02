@@ -6,9 +6,11 @@ import transcribationController from "@/whisper_module/controller/transcribation
 (async (): Promise<void> => {
     const PORT = "4000";
     const app: Express = express();
+    const FRONTEND_PORT = process.env.FRONTEND_PORT || "5173";
+    const FRONTEND_HOST = process.env.FRONTEND_PORT || "http://localhost";
 
     const corsOptions = {
-        origin: "http://localhost:5173",
+        origin: `${FRONTEND_HOST}:${FRONTEND_PORT}`,
         methods: ["POST"],
         credentials: true,
     };

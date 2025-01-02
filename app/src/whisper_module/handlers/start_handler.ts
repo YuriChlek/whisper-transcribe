@@ -18,7 +18,7 @@ const start_handler: () => Promise<void> = async (): Promise<void> => {
 
         if (data.length === 0) {
             console.log("Немає нових записів. Чекаю...");
-            await new Promise(resolve => setTimeout(resolve, 5000));
+            await new Promise((resolve) => setTimeout(resolve, 5000));
             continue;
         }
 

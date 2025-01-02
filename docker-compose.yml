@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   app:
+    container_name: app
     build:
       context: .
       dockerfile: ./app/Dockerfile
@@ -9,4 +10,24 @@ services:
       - "4000:4000"
     environment:
       - NODE_ENV=production
-    command: npm run dev
+      - FRONTEND_PORT=${FRONTEND_PORT}
+    networks:
+      - whisper
+
+  client:
+    container_name: client
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+    ports:
+      - "8070:80"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - whisper
+    depends_on:
+      - app
+
+networks:
+  whisper:
+    driver: bridge
