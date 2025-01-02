@@ -6,7 +6,8 @@ import { resetDbConnection } from "@/db_module/db_connection/db_connection";
 const save_db_connection_config: (data: DBConnectionData) => Promise<void> = async (
     data: DBConnectionData,
 ): Promise<void> => {
-    const envPath: string = path.join(__dirname, "../../../../.env");
+    const __app_dir = process.cwd();
+    const envPath: string = path.join(__app_dir, "/.env");
     const envData = {
         DB_HOST: data.host,
         DB_PORT: data.port,
