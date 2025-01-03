@@ -9,8 +9,10 @@ import * as process from "node:process";
     const app: Express = express();
     const productionHosts = ["http://localhost", "http://whisper.local", "https://whisper.local"];
     const devHost = "http://localhost:5173";
+    const activeCorsHosts: Array<string> | string = process.env.NODE_ENV === "production" ? productionHosts : devHost
+
     const corsOptions = {
-        origin: process.env.NODE_ENV === "production" ? productionHosts : devHost,
+        origin: activeCorsHosts,
         methods: ["POST"],
         credentials: true,
     };
@@ -26,7 +28,7 @@ import * as process from "node:process";
 
     app.listen(PORT, (): void =>
         {
-            console.log(productionHosts)
+            console.log("Active cors hosts:", activeCorsHosts)
             console.log(`Server Connected to http://localhost:${PORT}`)
         }
     );
