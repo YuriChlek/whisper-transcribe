@@ -1,8 +1,9 @@
 import { Router, Request, Response } from "express";
 import db_check_connection_handler from "@/db_module/actions/handlers/db_check_connection_handler";
 import save_db_connection_config from "@/db_module/actions/save/save_db_connection_config";
-import db_get_connection_data from "@/db_module/actions/handlers/db_get_connection_data";
+import get_connection_data from "@/utils/get_connection_data";
 import { DBConnectionData, ResponseType } from "@/db_module/types/db_module_types";
+import { get_start_stop_flag } from "@/utils/start_stop_flag";
 
 const dbSettingsController = Router();
 
@@ -55,11 +56,12 @@ dbSettingsController.post(
     async (_: Request, res: Response): Promise<void> => {
         try {
             const dbConnectionData: DBConnectionData | ResponseType =
-                await db_get_connection_data();
+                await get_connection_data();
 
             res.status(200).json({
                 success: true,
                 data: dbConnectionData,
+                start: get_start_stop_flag(),
             });
         } catch (error) {
             res.status(200).json({

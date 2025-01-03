@@ -5,7 +5,7 @@ import convert_audio from "@/whisper_module/actions/convert_audio";
 import transcribe from "@/whisper_module/actions/transcribe";
 import { TableRow } from "@/db_module/types/db_module_types";
 import { TranscriptionResult } from "@/whisper_module/types/whisper_module_types";
-import { get_start_stop_flag } from "@/whisper_module/handlers/start_stop_flag_handler";
+import { get_start_stop_flag } from "@/utils/start_stop_flag";
 
 const start_handler: () => Promise<void> = async (): Promise<void> => {
     const updateQuery = `UPDATE ${TABLE_NAME} SET Transcript = ? WHERE ID = ?`;

@@ -7,9 +7,14 @@ import * as process from "node:process";
 (async (): Promise<void> => {
     const PORT = "4000";
     const app: Express = express();
-    const productionHosts = ["http://localhost", "http://whisper.local", "https://whisper.local"];
+    const productionHosts = [
+        "http://localhost",
+        "http://whisper.local",
+        "https://whisper.local",
+    ];
     const devHost = "http://localhost:5173";
-    const activeCorsHosts: Array<string> | string = process.env.NODE_ENV === "production" ? productionHosts : devHost
+    const activeCorsHosts: Array<string> | string =
+        process.env.NODE_ENV === "production" ? productionHosts : devHost;
 
     const corsOptions = {
         origin: activeCorsHosts,
@@ -18,7 +23,7 @@ import * as process from "node:process";
     };
 
     if (process.env.NODE_ENV === "production" && process.env.CUSTOM_HOST) {
-        productionHosts.push(process.env.CUSTOM_HOST)
+        productionHosts.push(process.env.CUSTOM_HOST);
     }
 
     app.use(cors(corsOptions));
@@ -26,10 +31,8 @@ import * as process from "node:process";
     app.use(dbSettingsController);
     app.use(transcribationController);
 
-    app.listen(PORT, (): void =>
-        {
-            console.log("Active cors hosts:", activeCorsHosts)
-            console.log(`Server Connected to http://localhost:${PORT}`)
-        }
-    );
+    app.listen(PORT, (): void => {
+        console.log("Active cors hosts:", activeCorsHosts);
+        console.log(`Server Connected to http://localhost:${PORT}`);
+    });
 })();

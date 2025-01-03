@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import fetchData from "../../utils/fetchData";
-import { Id, ToastContainer, toast } from "react-toastify";
+import { Id, toast } from "react-toastify";
 import validateDBConnectionData from "../../utils/validateDbConnecrionData";
 import styles from "./styles.module.css";
 import ButtonBase from "../ButtonBase/ButtonBase";
@@ -9,6 +9,8 @@ import {
     DBConnectionData,
     DbConnectionResponse,
 } from "../../types/frontend_types";
+import { useAppState } from "../../state/state.ts";
+import updateMessage from "../../utils/updateMessage.ts";
 
 const DBConnectionForm: React.FC = () => {
     const [host, setHost] = useState("");
@@ -16,21 +18,7 @@ const DBConnectionForm: React.FC = () => {
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [database, setDatabase] = useState("");
-
-    const updateMessage = (
-        toastPopup: Id,
-        type: "info" | "success" | "warning" | "error" | "default",
-        message: string,
-    ) => {
-        setTimeout(() => {
-            toast.update(toastPopup, {
-                type: type,
-                render: message,
-                isLoading: false,
-                autoClose: 3000,
-            });
-        }, 200);
-    };
+    const { isStarted, setIsStartedValue } = useAppState();
 
     const sendFormData: (sendUrl: string) => void = (sendUrl: string): void => {
         const loadingToastId: Id = toast.loading("Зачекайте, обробляємо запит...");
@@ -42,7 +30,7 @@ const DBConnectionForm: React.FC = () => {
             password,
             database,
         })
-            .then((response) => {
+            .then((response: CheckConnectionResponse) => {
                 console.log(response);
                 if (response.success) {
                     updateMessage(loadingToastId, "success", response.message);
@@ -68,28 +56,27 @@ const DBConnectionForm: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchData<DbConnectionResponse>("/get_db_connection_data").then((res) => {
-            const data: DBConnectionData = res.data;
-            setHost(data.host);
-            setPort(String(data.port));
-            setUser(data.user);
-            setPassword(data.password || "");
-            setDatabase(data.database || "");
-        });
+        fetchData<DbConnectionResponse>("/get_db_connection_data").then(
+            (res: DbConnectionResponse) => {
+                const data: DBConnectionData = res.data;
+                setHost(data.host);
+                setPort(String(data.port));
+                setUser(data.user);
+                setPassword(data.password || "");
+                setDatabase(data.database || "");
+
+                setIsStartedValue(res.start ?? false);
+            },
+        );
     }, []);
 
     return (
         <div className={styles.wrapper}>
-            <ToastContainer
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={true}
-                pauseOnHover={true}
-            />
             <form className={styles.form}>
                 <div className={styles["form-address-wrapper"]}>
                     <input
                         type="text"
+                        disabled={isStarted}
                         placeholder="IP-адреса"
                         value={host}
                         onChange={(e) => setHost(e.target.value)}
@@ -97,6 +84,7 @@ const DBConnectionForm: React.FC = () => {
                     />
                     <input
                         type="text"
+                        disabled={isStarted}
                         placeholder="Порт"
                         value={port}
                         onChange={(e) => setPort(e.target.value)}
@@ -105,6 +93,7 @@ const DBConnectionForm: React.FC = () => {
                 </div>
                 <input
                     type="text"
+                    disabled={isStarted}
                     placeholder="Ім'я користувача"
                     value={user}
                     onChange={(e) => setUser(e.target.value)}
@@ -112,6 +101,7 @@ const DBConnectionForm: React.FC = () => {
                 />
                 <input
                     type="password"
+                    disabled={isStarted}
                     placeholder="Пароль"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -119,16 +109,25 @@ const DBConnectionForm: React.FC = () => {
                 />
                 <input
                     type="text"
+                    disabled={isStarted}
                     placeholder="Назва бази даних"
                     value={database}
                     onChange={(e) => setDatabase(e.target.value)}
                     className={styles["form-input"]}
                 />
                 <div className={styles["form-button-wrapper"]}>
-                    <ButtonBase handler={checkDbConnection} type="button">
+                    <ButtonBase
+                        disabled={isStarted}
+                        handler={checkDbConnection}
+                        type="button"
+                    >
                         Перевірити з'єднання
                     </ButtonBase>
-                    <ButtonBase handler={saveDbConnection} type="button">
+                    <ButtonBase
+                        disabled={isStarted}
+                        handler={saveDbConnection}
+                        type="button"
+                    >
                         Зберегти налаштування
                     </ButtonBase>
                 </div>
