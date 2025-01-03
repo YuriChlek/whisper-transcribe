@@ -1,13 +1,17 @@
-const fetchData = async (
+const location = window.location
+const urlApi = `${location.protocol}//${location.hostname}:4000`;
+
+const fetchData = async <T>(
     url: string,
     data?: Record<string, string | number>,
-): Promise<any> => {
+): Promise<T> => {
     try {
-        const response = await fetch(`http://localhost:4000${url}`, {
+        const response = await fetch(`${urlApi}${url}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
+            credentials: "include",
             body: data
                 ? JSON.stringify({
                       ...data,
@@ -19,9 +23,12 @@ const fetchData = async (
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        return await response.json();
+        return (await response.json()) as T;
     } catch (error) {
-        return error;
+        if (error instanceof Error) {
+            throw error;
+        }
+        throw new Error("Unexpected error");
     }
 };
 

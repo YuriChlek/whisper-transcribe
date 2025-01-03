@@ -16,9 +16,11 @@ const db_query_handler: (
             return rows;
         } catch (err) {
             throw new Error(
-                `Помилка запису в базу даних. ${err instanceof Error
-                    ? err.message
-                    : "Пул з'єднання з базою даних не доступний."}`
+                `Помилка запису в базу даних. ${
+                    err instanceof Error
+                        ? err.message
+                        : "Пул з'єднання з базою даних не доступний."
+                }`,
             );
         }
     } else {

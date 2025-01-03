@@ -1,15 +1,53 @@
 version: '3.8'
 
 services:
+  nginx-proxy:
+    container_name: whisper_proxy
+    image: nginx:alpine
+    environment:
+      - DEFAULT_HOST=whisper.local
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80:80"
+      - "443:443"
+      - "4020:4000"
+    restart: always
+    networks:
+      - whisper
+    depends_on:
+      - app
+      - client
+
   app:
+    container_name: whisper_app
     build:
       context: .
       dockerfile: ./app/Dockerfile
     ports:
       - "4000:4000"
-    volumes:
-      - .:/app
-      - /app/node_modules
+    restart: always
     environment:
       - NODE_ENV=production
-    command: npm start
+      - CUSTOM_HOST=${HOST}
+    networks:
+      - whisper
+
+  client:
+    container_name: whisper_client
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+    ports:
+      - "5173:80"
+    restart: always
+    environment:
+      - NODE_ENV=production
+    networks:
+      - whisper
+    depends_on:
+      - app
+
+networks:
+  whisper:
+    driver: bridge

@@ -1,6 +1,9 @@
 import { Router, Request, Response } from "express";
 import start_handler from "@/whisper_module/handlers/start_handler";
-import { set_stop_flag, set_start_flag } from "@/whisper_module/handlers/start_stop_flag_handler";
+import {
+    set_stop_flag,
+    set_start_flag,
+} from "@/whisper_module/handlers/start_stop_flag_handler";
 
 const transcribationController = Router();
 
@@ -10,7 +13,7 @@ transcribationController.post(
         set_start_flag();
 
         try {
-            setTimeout(() => start_handler(), 0)
+            setTimeout(() => start_handler(), 0);
 
             res.status(200).json({
                 start: true,
