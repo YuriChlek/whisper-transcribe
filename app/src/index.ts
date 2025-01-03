@@ -2,18 +2,22 @@ import express, { Express } from "express";
 import cors from "cors";
 import dbSettingsController from "@/db_module/controler/db_settings_controller";
 import transcribationController from "@/whisper_module/controller/transcribation_controller";
+import * as process from "node:process";
 
 (async (): Promise<void> => {
     const PORT = "4000";
     const app: Express = express();
-    const FRONTEND_PORT = process.env.FRONTEND_PORT || "5173";
-    const FRONTEND_HOST = process.env.FRONTEND_PORT || "http://localhost";
-
+    const productionHosts = ["http://localhost", "http://whisper.local", "https://whisper.local"];
+    const devHost = "http://localhost:5173";
     const corsOptions = {
-        origin: `${FRONTEND_HOST}:${FRONTEND_PORT}`,
+        origin: process.env.NODE_ENV === "production" ? productionHosts : devHost,
         methods: ["POST"],
         credentials: true,
     };
+
+    if (process.env.NODE_ENV === "production" && process.env.CUSTOM_HOST) {
+        productionHosts.push(process.env.CUSTOM_HOST)
+    }
 
     app.use(cors(corsOptions));
     app.use(express.json());
@@ -21,6 +25,9 @@ import transcribationController from "@/whisper_module/controller/transcribation
     app.use(transcribationController);
 
     app.listen(PORT, (): void =>
-        console.log(`Server Connected to http://localhost:${PORT}`),
+        {
+            console.log(productionHosts)
+            console.log(`Server Connected to http://localhost:${PORT}`)
+        }
     );
 })();

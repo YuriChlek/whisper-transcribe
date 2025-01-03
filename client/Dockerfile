@@ -1,5 +1,5 @@
 # Використовуємо офіційний Node.js образ як базовий
-FROM node:22-alpine AS build
+FROM node:20-alpine AS build
 
 # Встановлюємо робочу директорію
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY ./client/package*.json ./
 
 # Встановлюємо залежності
-RUN npm install
+RUN npm ci
 
 # Копіюємо всі файли проєкту в контейнер
 COPY ./client .
