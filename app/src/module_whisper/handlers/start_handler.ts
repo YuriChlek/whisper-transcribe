@@ -1,10 +1,10 @@
 import fs from "node:fs/promises";
 import { OUTPUT_FILE_PATH, TABLE_NAME } from "@/constants/constants";
-import db_query_handler from "@/db_module/actions/handlers/db_query_handler";
-import convert_audio from "@/whisper_module/actions/convert_audio";
-import transcribe from "@/whisper_module/actions/transcribe";
-import { TableRow } from "@/db_module/types/db_module_types";
-import { TranscriptionResult } from "@/whisper_module/types/whisper_module_types";
+import db_query_handler from "@/module_db/actions/handlers/db_query_handler";
+import convert_audio from "@/module_whisper/actions/convert_audio";
+import transcribe from "@/module_whisper/actions/transcribe";
+import { TableRow } from "@/module_db/types/db_module_types";
+import { TranscriptionResult } from "@/module_whisper/types/whisper_module_types";
 import { get_start_stop_flag } from "@/utils/start_stop_flag";
 
 const start_handler: () => Promise<void> = async (): Promise<void> => {

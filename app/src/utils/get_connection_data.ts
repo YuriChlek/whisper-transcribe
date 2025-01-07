@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { DBConnectionData } from "@/db_module/types/db_module_types";
+import { DBConnectionData } from "@/module_db/types/db_module_types";
 
 const get_connection_data: () => Promise<DBConnectionData> = async () => {
     delete process.env.DB_HOST;

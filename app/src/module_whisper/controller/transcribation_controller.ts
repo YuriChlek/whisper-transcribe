@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import start_handler from "@/whisper_module/handlers/start_handler";
+import start_handler from "@/module_whisper/handlers/start_handler";
 import { set_stop_flag, set_start_flag } from "@/utils/start_stop_flag";
 import get_connection_data from "@/utils/get_connection_data";
 import create_simple_connection from "@/utils/create_simple_connection";

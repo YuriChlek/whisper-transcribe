@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import cors from "cors";
-import dbSettingsController from "@/db_module/controler/db_settings_controller";
-import transcribationController from "@/whisper_module/controller/transcribation_controller";
+import dbSettingsController from "@/module_db/controler/db_settings_controller";
+import transcribationController from "@/module_whisper/controller/transcribation_controller";
 import * as process from "node:process";
 
 (async (): Promise<void> => {

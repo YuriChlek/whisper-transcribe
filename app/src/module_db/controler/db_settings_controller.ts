@@ -1,8 +1,8 @@
 import { Router, Request, Response } from "express";
-import db_check_connection_handler from "@/db_module/actions/handlers/db_check_connection_handler";
-import save_db_connection_config from "@/db_module/actions/save/save_db_connection_config";
+import db_check_connection_handler from "@/module_db/actions/handlers/db_check_connection_handler";
+import save_db_connection_config from "@/module_db/actions/save/save_db_connection_config";
 import get_connection_data from "@/utils/get_connection_data";
-import { DBConnectionData, ResponseType } from "@/db_module/types/db_module_types";
+import { DBConnectionData, ResponseType } from "@/module_db/types/db_module_types";
 import { get_start_stop_flag } from "@/utils/start_stop_flag";
 
 const dbSettingsController = Router();
