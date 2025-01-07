@@ -1,7 +1,7 @@
 import * as path from "node:path";
 import { promises as fs } from "node:fs";
-import { DBConnectionData } from "@/db_module/types/db_module_types";
-import { resetDbConnection } from "@/db_module/db_connection/db_connection";
+import { DBConnectionData } from "@/module_db/types/db_module_types";
+import { resetDbConnection } from "@/module_db/db_connection/db_connection";
 
 const save_db_connection_config: (data: DBConnectionData) => Promise<void> = async (
     data: DBConnectionData,

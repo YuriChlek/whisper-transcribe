@@ -1,22 +1,22 @@
-import React, { ReactNode } from "react";
+import React, { ButtonHTMLAttributes, ReactNode } from "react";
 import clsx from "clsx";
 import styles from "./button.style.module.css";
 
-type ButtonProps = {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     handler: () => void;
-    type?: "button" | "submit" | "reset";
     children: ReactNode;
     className?: string;
-};
+}
 
 const ButtonBase: React.FC<ButtonProps> = (props: ButtonProps) => {
+    const { handler, className, children, ...rest } = props;
     return (
         <button
-            onClick={props.handler}
-            type={props.type}
-            className={clsx(styles["form-button"], props.className)}
+            onClick={handler}
+            className={clsx(styles["form-button"], className)}
+            {...rest}
         >
-            {props.children}
+            {children}
         </button>
     );
 };

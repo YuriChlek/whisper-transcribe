@@ -1,4 +1,4 @@
-const location = window.location
+const location = window.location;
 const urlApi = `${location.protocol}//${location.hostname}:4000`;
 
 const fetchData = async <T>(

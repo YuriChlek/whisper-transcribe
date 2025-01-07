@@ -27,9 +27,9 @@
             }
         ],
         "baseUrl": ".",
-        "paths": {
-            "@/*": ["./*"]
-        },
+        /*"paths": {
+            "@*/ /*": [".*/ /*"]
+        },*/
         "incremental": true
     },
     "include": ["src"],

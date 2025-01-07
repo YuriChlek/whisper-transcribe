@@ -15,4 +15,12 @@ export type CheckConnectionResponse = {
 export type DbConnectionResponse = {
     data: DBConnectionData;
     success: boolean;
+    start?: boolean;
+};
+
+export type TranscribationStartResponse = {
+    start: boolean;
+    success?: boolean;
+    message: string;
+    error?: string;
 };

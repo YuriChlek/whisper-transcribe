@@ -1,6 +1,6 @@
 import * as path from "node:path";
 import { ChildProcessWithoutNullStreams, spawn } from "child_process";
-import { TranscriptionResult } from "@/whisper_module/types/whisper_module_types";
+import { TranscriptionResult } from "@/module_whisper/types/whisper_module_types";
 
 const whisperTranscribe = () => {
     return async (audioPath: string): Promise<TranscriptionResult> => {

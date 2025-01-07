@@ -1,5 +1,5 @@
 import { Pool, QueryResult } from "mysql2";
-import { getDbConnection } from "@/db_module/db_connection/db_connection";
+import { getDbConnection } from "@/module_db/db_connection/db_connection";
 
 const db_query_handler: (
     query: string,
