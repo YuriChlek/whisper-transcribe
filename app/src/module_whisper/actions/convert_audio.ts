@@ -11,8 +11,9 @@ const convert_audio_factory = () => {
     }
 
     return async (audioPath: string) => {
-        const inputFile = path.resolve(audioPath);
-        const outputFile = path.resolve(OUTPUT_FILE_PATH);
+        const isRemote: boolean = audioPath.startsWith("http://") || audioPath.startsWith("https://");
+        const inputFile: string = isRemote ? audioPath : path.resolve(audioPath);
+        const outputFile: string = path.resolve(OUTPUT_FILE_PATH);
 
         try {
             ffmpeg(inputFile)
@@ -28,7 +29,7 @@ const convert_audio_factory = () => {
                 })
                 .save(outputFile);
         } catch (error) {
-            console.log("convert_audio", `Не знайдено файл: ${audioPath}`);
+            console.log(`Не знайдено файл: ${audioPath}`);
             return error;
         }
     };
