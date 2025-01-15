@@ -12,7 +12,8 @@ COPY ./app .
 
 RUN npm install
 RUN pip install -r whisper/requirements.txt
+RUN python3  whisper/whisper_entry_point.py
 
 EXPOSE 4000
 
-CMD ["sh", "-c", "npm run build && npm run start"]
+CMD ["sh", "-c", "npm run dev"]

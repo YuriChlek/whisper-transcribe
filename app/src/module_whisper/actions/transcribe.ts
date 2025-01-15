@@ -4,6 +4,7 @@ import { TranscriptionResult } from "@/module_whisper/types/whisper_module_types
 
 const whisperTranscribe = () => {
     return async (audioPath: string): Promise<TranscriptionResult> => {
+        console.log("." + audioPath)
         try {
             const transcription = await new Promise((resolve, reject) => {
                 const whisper: ChildProcessWithoutNullStreams = spawn(
@@ -34,7 +35,13 @@ const whisperTranscribe = () => {
                 });
             });
 
-            return JSON.parse(transcription as string) as TranscriptionResult;
+
+            try {
+                return JSON.parse(transcription as string) as TranscriptionResult;
+            } catch (error) {
+                console.error("Некоректний JSON:", transcription);
+                throw new Error("Received invalid JSON from Python script.");
+            }
         } catch (error) {
             console.error("Помилка транскрипції:", error);
             throw new Error(
