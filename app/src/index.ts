@@ -3,7 +3,6 @@ import cors from "cors";
 import dbSettingsController from "@/module_db/controler/db_settings_controller";
 import transcribationController from "@/module_whisper/controller/transcribation_controller";
 import * as process from "node:process";
-import get_file from "@/module_files/actions/get_file";
 
 (async (): Promise<void> => {
     const PORT = "4000";
@@ -22,8 +21,6 @@ import get_file from "@/module_files/actions/get_file";
         methods: ["POST"],
         credentials: true,
     };
-
-    await get_file();
 
     if (process.env.NODE_ENV === "production" && process.env.CUSTOM_HOST) {
         productionHosts.push(process.env.CUSTOM_HOST);

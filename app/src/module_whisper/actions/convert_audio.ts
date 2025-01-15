@@ -2,6 +2,7 @@ import * as path from "node:path";
 import ffmpegPath from "ffmpeg-static";
 import ffmpeg from "fluent-ffmpeg";
 import { OUTPUT_FILE_PATH } from "@/constants/constants";
+import format_path from "@/module_whisper/actions/format_path";
 
 const convert_audio_factory = () => {
     if (ffmpegPath) {
@@ -11,9 +12,11 @@ const convert_audio_factory = () => {
     }
 
     return async (audioPath: string) => {
-        const isRemote: boolean = audioPath.startsWith("http://") || audioPath.startsWith("https://");
-        const inputFile: string = isRemote ? audioPath : path.resolve(audioPath);
-        const outputFile: string = path.resolve(OUTPUT_FILE_PATH);
+        const inputFile: string = format_path(audioPath);
+        const outputFile: string = path.resolve(__dirname ,`../../../${OUTPUT_FILE_PATH}`);
+
+        const audio_path = format_path(audioPath)
+        console.log(audio_path);
 
         try {
             ffmpeg(inputFile)
