@@ -31,7 +31,6 @@ const DBConnectionForm: React.FC = () => {
             database,
         })
             .then((response: CheckConnectionResponse) => {
-                console.log(response);
                 if (response.success) {
                     updateMessage(loadingToastId, "success", response.message);
                 } else {
