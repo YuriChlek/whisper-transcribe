@@ -1,17 +1,24 @@
 import * as path from "node:path";
+import * as os from "node:os";
 import { ChildProcessWithoutNullStreams, spawn } from "child_process";
 import { TranscriptionResult } from "@/module_whisper/types/whisper_module_types";
+import { OUTPUT_FILE_PATH } from "@/constants/constants";
 
 const whisperTranscribe = () => {
+    const __app_dir = process.cwd();
+    const platform = os.platform();
+    const command = platform === "win32" ? "python" : "python3"
+
     return async (audioPath: string): Promise<TranscriptionResult> => {
-        console.log("." + audioPath)
+        const audioFile: string = path.join(__app_dir, audioPath);
+
         try {
             const transcription = await new Promise((resolve, reject) => {
                 const whisper: ChildProcessWithoutNullStreams = spawn(
-                    "python3",
+                    command,
                     [
-                        path.join(__dirname, "../../../whisper/whisper_entry_point.py"),
-                        audioPath,
+                        path.join(__app_dir, "/whisper/whisper_entry_point.py"),
+                        `../app${OUTPUT_FILE_PATH}`,
                     ],
                     { env: { ...process.env, PYTHONWARNINGS: "ignore" } },
                 );

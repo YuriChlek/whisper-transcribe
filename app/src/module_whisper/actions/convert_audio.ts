@@ -5,6 +5,8 @@ import { OUTPUT_FILE_PATH } from "@/constants/constants";
 import format_path from "@/module_whisper/actions/format_path";
 
 const convert_audio_factory = () => {
+    const __app_dir = process.cwd();
+
     if (ffmpegPath) {
         ffmpeg.setFfmpegPath(ffmpegPath);
     } else {
@@ -13,10 +15,7 @@ const convert_audio_factory = () => {
 
     return async (audioPath: string) => {
         const inputFile: string = format_path(audioPath);
-        const outputFile: string = path.resolve(__dirname ,`../../../${OUTPUT_FILE_PATH}`);
-
-        const audio_path = format_path(audioPath)
-        console.log(audio_path);
+        const outputFile: string = path.join(__app_dir, OUTPUT_FILE_PATH);
 
         try {
             ffmpeg(inputFile)
