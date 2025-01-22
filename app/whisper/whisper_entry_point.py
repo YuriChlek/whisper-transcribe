@@ -2,6 +2,8 @@ import sys
 import whisper
 import os
 
+sys.stdout.reconfigure(encoding='utf-8')
+
 try:
     # Завантаження моделі
     model = whisper.load_model("turbo")
