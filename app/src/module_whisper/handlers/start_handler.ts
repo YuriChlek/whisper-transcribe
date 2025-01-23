@@ -31,18 +31,17 @@ const start_handler: () => Promise<void> = async (): Promise<void> => {
                 await convert_audio(audioPath);
 
                 const res = (await transcribe(OUTPUT_FILE_PATH)) as TranscriptionResult;
-                console.log("res", res)
 
                 if (res && "text" in res) {
-                    await db_query_handler(updateQuery, [res.text, id]);
+                    await db_query_handler(updateQuery, [res.text.trim(), id]);
                     console.log(`Файл ${audioPath} успішно транскрибовано.`);
                 }
             } catch (err) {
                 console.log(`Помилка транскрибації файлу: ${audioPath}`, err);
-                await db_query_handler(updateQuery, [
+                /*await db_query_handler(updateQuery, [
                     `Помилка транскрибації файлу: ${audioPath}`,
                     id,
-                ]);
+                ]);*/
             }
         } else {
             console.log("Шлях до файлу відсутній в базі даних.");
