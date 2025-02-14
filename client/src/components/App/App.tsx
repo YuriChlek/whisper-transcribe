@@ -1,5 +1,5 @@
 import React from "react";
-import DBConnectionForm from "../DBConnectionInput/DBConnectionForm";
+import ConnectionForm from "../ConnectionForm/ConnectionForm.tsx";
 import styles from "./app.module.css";
 import TranscribionControllers from "../TranscribationControllers/TranscribarionControllers";
 import AppContextProvider from "../../state/ContextProvider.tsx";
@@ -8,9 +8,9 @@ import { ToastContainer } from "react-toastify";
 const App: React.FC = () => {
     return (
         <div className={styles.wrapper}>
-            <h3>Налаштування підключення до бази даних</h3>
+            <h3>Налаштування</h3>
             <AppContextProvider>
-                <DBConnectionForm />
+                <ConnectionForm />
                 <hr />
                 <TranscribionControllers />
             </AppContextProvider>

@@ -38,10 +38,10 @@ const start_handler: () => Promise<void> = async (): Promise<void> => {
                 }
             } catch (err) {
                 console.log(`Помилка транскрибації файлу: ${audioPath}`, err);
-                /*await db_query_handler(updateQuery, [
+                await db_query_handler(updateQuery, [
                     `Помилка транскрибації файлу: ${audioPath}`,
                     id,
-                ]);*/
+                ]);
             }
         } else {
             console.log("Шлях до файлу відсутній в базі даних.");

@@ -3,7 +3,15 @@ const urlApi = `${location.protocol}//${location.hostname}:4000`;
 
 const fetchData = async <T>(
     url: string,
-    data?: Record<string, string | number>,
+    data?: {
+        host: string;
+        port: string;
+        user: string;
+        password: string;
+        database: string;
+        isLocalFiles?: boolean;
+        localFilesUrl?: string
+    }
 ): Promise<T> => {
     try {
         const response = await fetch(`${urlApi}${url}`, {
