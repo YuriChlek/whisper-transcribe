@@ -33,3 +33,17 @@
     display: flex;
     gap: 10px;
 }
+
+.files-settings-wrapper {
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    flex: 1;
+    gap: 10px;
+}
+
+.form-label {
+    display: block;
+    text-align: left;
+}

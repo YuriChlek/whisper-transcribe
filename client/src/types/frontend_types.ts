@@ -1,10 +1,12 @@
-export type DBConnectionData = {
+export type SettingsData = {
     host: string;
     port: number;
     user: string;
     password?: string;
     database?: string;
     connectionLimit?: number;
+    isLocalFiles?: boolean
+    localFilesUrl?: string
 };
 
 export type CheckConnectionResponse = {
@@ -13,7 +15,7 @@ export type CheckConnectionResponse = {
 };
 
 export type DbConnectionResponse = {
-    data: DBConnectionData;
+    data: SettingsData;
     success: boolean;
     start?: boolean;
 };

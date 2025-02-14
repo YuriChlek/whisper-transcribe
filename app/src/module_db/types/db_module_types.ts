@@ -9,13 +9,15 @@ export type ResponseType = {
     error?: Error | any;
 };
 
-export type DBConnectionData = {
+export type SettingsData = {
     host: string;
     port: number;
     user: string;
     password: string;
     database?: string;
     connectionLimit?: number;
+    isLocalFiles?: boolean;
+    localFilesUrl?: string
 };
 
 export type TableRow = {

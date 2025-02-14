@@ -31,10 +31,9 @@ const start_handler: () => Promise<void> = async (): Promise<void> => {
                 await convert_audio(audioPath);
 
                 const res = (await transcribe(OUTPUT_FILE_PATH)) as TranscriptionResult;
-                console.log("res", res)
 
                 if (res && "text" in res) {
-                    await db_query_handler(updateQuery, [res.text, id]);
+                    await db_query_handler(updateQuery, [res.text.trim(), id]);
                     console.log(`Файл ${audioPath} успішно транскрибовано.`);
                 }
             } catch (err) {

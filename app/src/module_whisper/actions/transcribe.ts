@@ -5,15 +5,15 @@ import { TranscriptionResult } from "@/module_whisper/types/whisper_module_types
 import { OUTPUT_FILE_PATH } from "@/constants/constants";
 
 const whisperTranscribe = () => {
-    const __app_dir = process.cwd();
-    const platform = os.platform();
-    const command = platform === "win32" ? "python" : "python3"
+    const __app_dir: string = process.cwd();
+    const platform: NodeJS.Platform = os.platform();
+    const command: "python" | "python3" = platform === "win32" ? "python" : "python3"
 
     return async (audioPath: string): Promise<TranscriptionResult> => {
         const audioFile: string = path.join(__app_dir, audioPath);
 
         try {
-            const transcription = await new Promise((resolve, reject) => {
+            const transcription: string = await new Promise((resolve, reject) => {
                 const whisper: ChildProcessWithoutNullStreams = spawn(
                     command,
                     [

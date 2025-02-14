@@ -1,9 +1,9 @@
 import fetchData from "./fetchData";
-import type { DBConnectionData } from "../types/frontend_types";
+import type { SettingsData } from "../types/frontend_types";
 
-const getDbConnectionData = async (): Promise<DBConnectionData> => {
+const getDbConnectionData = async (): Promise<SettingsData> => {
     try {
-        const a = await fetchData<DBConnectionData>("/get_db_connection_data");
+        const a = await fetchData<SettingsData>("/get_db_connection_data");
         console.log(a);
         return a;
     } catch (error) {

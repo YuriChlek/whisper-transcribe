@@ -6,18 +6,20 @@ import styles from "./styles.module.css";
 import ButtonBase from "../ButtonBase/ButtonBase";
 import {
     CheckConnectionResponse,
-    DBConnectionData,
+    SettingsData,
     DbConnectionResponse,
 } from "../../types/frontend_types";
 import { useAppState } from "../../state/state.ts";
 import updateMessage from "../../utils/updateMessage.ts";
 
-const DBConnectionForm: React.FC = () => {
+const ConnectionForm: React.FC = () => {
     const [host, setHost] = useState("");
     const [port, setPort] = useState("");
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [database, setDatabase] = useState("");
+    const [isLocalFiles, setIsLocalFiles] = useState(false);
+    const [localFilesUrl, setLocalFilesUrl] = useState("");
     const { isStarted, setIsStartedValue } = useAppState();
 
     const sendFormData: (sendUrl: string) => void = (sendUrl: string): void => {
@@ -29,6 +31,8 @@ const DBConnectionForm: React.FC = () => {
             user,
             password,
             database,
+            isLocalFiles,
+            localFilesUrl
         })
             .then((response: CheckConnectionResponse) => {
                 if (response.success) {
@@ -57,12 +61,15 @@ const DBConnectionForm: React.FC = () => {
     useEffect(() => {
         fetchData<DbConnectionResponse>("/get_db_connection_data").then(
             (res: DbConnectionResponse) => {
-                const data: DBConnectionData = res.data;
+                const data: SettingsData = res.data;
+
                 setHost(data.host);
                 setPort(String(data.port));
                 setUser(data.user);
                 setPassword(data.password || "");
                 setDatabase(data.database || "");
+                setIsLocalFiles(data.isLocalFiles || false);
+                setLocalFilesUrl(data.localFilesUrl || "");
 
                 setIsStartedValue(res.start ?? false);
             },
@@ -114,6 +121,29 @@ const DBConnectionForm: React.FC = () => {
                     onChange={(e) => setDatabase(e.target.value)}
                     className={styles["form-input"]}
                 />
+
+                <div className={styles["files-settings-wrapper"]}>
+                    <label className={styles["form-label"]}>
+                        <input
+                            type="checkbox"
+                            disabled={isStarted}
+                            checked={isLocalFiles}
+                            onChange={(e) => setIsLocalFiles(e.target.checked)}
+                            className={styles["form-input"]}
+                        />
+                        <span>Файли на локальній машині.</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        disabled={isStarted || !isLocalFiles}
+                        placeholder="Шлях до папки на локальній машині."
+                        value={localFilesUrl}
+                        onChange={(e) => setLocalFilesUrl(e.target.value)}
+                        className={styles["form-input"]}
+                    />
+                </div>
+
                 <div className={styles["form-button-wrapper"]}>
                     <ButtonBase
                         disabled={isStarted}
@@ -127,7 +157,7 @@ const DBConnectionForm: React.FC = () => {
                         handler={saveDbConnection}
                         type="button"
                     >
-                        Зберегти налаштування
+                    Зберегти налаштування
                     </ButtonBase>
                 </div>
             </form>
@@ -135,4 +165,4 @@ const DBConnectionForm: React.FC = () => {
     );
 };
 
-export default DBConnectionForm;
+export default ConnectionForm;

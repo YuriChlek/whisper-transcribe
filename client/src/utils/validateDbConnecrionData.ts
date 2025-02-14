@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
-import { DBConnectionData } from "../types/frontend_types";
+import { SettingsData } from "../types/frontend_types";
 
-const validateDBConnectionData: (data: DBConnectionData) => boolean = (
-    data: DBConnectionData,
+const validateDBConnectionData: (data: SettingsData) => boolean = (
+    data: SettingsData,
 ): boolean => {
     const { host, port, user, database } = data;
     const ipRegex =
