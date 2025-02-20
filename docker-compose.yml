@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   nginx-proxy:
     container_name: whisper_proxy
@@ -30,6 +28,8 @@ services:
     environment:
       - NODE_ENV=production
       - CUSTOM_HOST=${HOST}
+    volumes:
+      - "D:/:/app/D"
     networks:
       - whisper
 

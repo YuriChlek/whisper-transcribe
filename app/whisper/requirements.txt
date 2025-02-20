@@ -4,3 +4,6 @@ openai-whisper
 pysmb
 ffmpeg
 torch
+torchaudio
+numpy
+pydub

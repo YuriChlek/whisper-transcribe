@@ -6,6 +6,7 @@ import transcribe from "@/module_whisper/actions/transcribe";
 import { TableRow } from "@/module_db/types/db_module_types";
 import { TranscriptionResult } from "@/module_whisper/types/whisper_module_types";
 import { get_start_stop_flag } from "@/utils/start_stop_flag";
+import format_path from "@/module_whisper/actions/format_path";
 
 const start_handler: () => Promise<void> = async (): Promise<void> => {
     const updateQuery = `UPDATE ${TABLE_NAME} SET Transcript = ? WHERE ID = ?`;
@@ -18,6 +19,7 @@ const start_handler: () => Promise<void> = async (): Promise<void> => {
 
         if (data.length === 0) {
             console.log("Немає нових записів. Чекаю...");
+
             await new Promise((resolve) => setTimeout(resolve, 5000));
             continue;
         }
@@ -27,19 +29,29 @@ const start_handler: () => Promise<void> = async (): Promise<void> => {
 
         if (audioPath) {
             try {
-                await fs.access(audioPath);
-                await convert_audio(audioPath);
+                const inputFile: string = format_path(audioPath);
+
+                await fs.access(inputFile);
+                await convert_audio(inputFile);
 
                 const res = (await transcribe(OUTPUT_FILE_PATH)) as TranscriptionResult;
 
                 if (res && "text" in res) {
-                    await db_query_handler(updateQuery, [res.text.trim(), id]);
-                    console.log(`Файл ${audioPath} успішно транскрибовано.`);
+                    if (res.text.trim()) {
+                        await db_query_handler(updateQuery, [res.text.trim(), id]);
+                        console.log(`Файл ${audioPath} успішно транскрибовано.`);
+                    }
+                    else {
+                        await db_query_handler(updateQuery, [
+                            `Голос не знайдено.`,
+                            id,
+                        ]);
+                    }
                 }
             } catch (err) {
                 console.log(`Помилка транскрибації файлу: ${audioPath}`, err);
                 await db_query_handler(updateQuery, [
-                    `Помилка транскрибації файлу: ${audioPath}`,
+                    `Голос не знайдено.`,
                     id,
                 ]);
             }

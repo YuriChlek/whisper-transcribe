@@ -18,7 +18,7 @@ const whisperTranscribe = () => {
                     command,
                     [
                         path.join(__app_dir, "/whisper/whisper_entry_point.py"),
-                        `../app${OUTPUT_FILE_PATH}`,
+                        audioFile,
                     ],
                     { env: { ...process.env, PYTHONWARNINGS: "ignore" } },
                 );
@@ -26,7 +26,7 @@ const whisperTranscribe = () => {
                 let transcription = "";
 
                 whisper.stdout.on("data", (data) => {
-                    transcription = data.toString();
+                    transcription += data.toString();
                 });
 
                 whisper.stderr.on("data", (data) => {
@@ -42,8 +42,10 @@ const whisperTranscribe = () => {
                 });
             });
 
-
             try {
+                if (!transcription.trim().startsWith("{")) {
+                    throw new Error("Python повернув некоректний JSON: " + transcription);
+                }
                 return JSON.parse(transcription as string) as TranscriptionResult;
             } catch (error) {
                 console.error("Некоректний JSON:", transcription);
