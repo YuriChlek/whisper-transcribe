@@ -11,7 +11,7 @@ def is_audio_empty(audio_file):
         # Завантаження аудіофайлу
         audio = AudioSegment.from_file(audio_file)
         # Перевірка середньої гучності
-        if audio.dBFS < -30:  # Параметр -50 дБFS можна налаштувати в залежності від ваших потреб
+        if audio.dBFS < -30:  # Параметр -50 дБFS можна налаштувати в залежності від потреб
             return True
         return False
     except Exception as e:

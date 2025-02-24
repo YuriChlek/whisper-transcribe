@@ -27,6 +27,11 @@ for /f "tokens=2*" %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Ses
 set "NEW_PATH=%NODE_PATH%;%OLD_PATH%"
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v Path /t REG_EXPAND_SZ /d "%NEW_PATH%" /f
 
+:: === Інший варіант додавання NodeJS в змінні оточення ===
+REM for /f "skip=2 tokens=2,*" %%A in ('reg query "HKLM\System\CurrentControlSet\Control\Session Manager\Environment" /v Path 2^>nul') do (
+REM setx /M PATH "%%B;%%NODE_PATH%%"
+REM )
+
 :: === Перезапускаємо explorer.exe ===
 echo Restarting explorer.exe...
 taskkill /F /IM explorer.exe
