@@ -12,7 +12,7 @@ COPY ./app .
 
 RUN npm install
 RUN pip install -r whisper/requirements.txt
-RUN python3  whisper/whisper_entry_point.py
+RUN python3  whisper/models/whisper_entry_point.py
 
 EXPOSE 4000
 

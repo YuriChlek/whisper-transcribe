@@ -48,6 +48,20 @@ services:
     depends_on:
       - app
 
+  mysql:
+    image: mysql:latest
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: jfhskfhsfjshf
+      MYSQL_DATABASE: rafddb
+      MYSQL_USER: rafd
+      MYSQL_PASSWORD: rafd_oewtewewtwe
+    ports:
+      - "3306:3306"
+    networks:
+      - whisper
+
 networks:
   whisper:
     driver: bridge

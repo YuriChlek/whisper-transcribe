@@ -2,6 +2,7 @@ import express, { Express } from "express";
 import cors from "cors";
 import dbSettingsController from "@/module_db/controler/db_settings_controller";
 import transcribationController from "@/module_whisper/controller/transcribation_controller";
+import registrationController from "@/module_registration/controllers/registration_controller";
 import * as process from "node:process";
 
 (async (): Promise<void> => {
@@ -30,6 +31,7 @@ import * as process from "node:process";
     app.use(express.json());
     app.use(dbSettingsController);
     app.use(transcribationController);
+    app.use(registrationController);
 
     app.listen(PORT, (): void => {
         console.log("Active cors hosts:", activeCorsHosts);

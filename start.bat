@@ -15,12 +15,20 @@ timeout /t 2 >nul
 
 :: Виконання Python-скрипта перед запуском сервера
 cd /d "%~dp0app"
-echo Running Python script: whisper/whisper_entry_point.py...
-python whisper/whisper_entry_point.py
 
 :: Запуск сервера
 echo App is running...
 start /b npm run dev
+
+:: Пауза для стабілізації сервера (опціонально)
+timeout /t 5 >nul
+
+echo Running Python script: whisper/models/whisper_entry_point.py...
+python whisper/models/whisper_entry_point.py
+echo Running Python script: whisper/models/whisper_entry_point_2.py...
+python whisper/models/whisper_entry_point_2.py
+echo Running Python script: whisper/models/whisper_entry_point_3.py...
+python whisper/models/whisper_entry_point_3.py
 
 :: Запуск клієнта
 cd /d "%~dp0client"

@@ -5,6 +5,7 @@ const format_path = (audioPath: string): string => {
     const isRemote: boolean = audioPath.startsWith("http://") || audioPath.startsWith("https://");
     const isSharedFile = audioPath.startsWith("//");
     const localFilesPath = process.env.LOCAL_FILES_URL;
+    const isProduction = process.env.NODE_ENV === "production"
 
     if (process.env.IS_LOCAL_FILES === "true" && localFilesPath) {
         const normalizePath = (filePath: string) =>
@@ -21,13 +22,13 @@ const format_path = (audioPath: string): string => {
             return "";
         }
 
-        const relativePath = sourceParts.slice(commonIndex + 1).join("/"); // Використання POSIX-шляхів
+        const relativePath = sourceParts.slice(commonIndex + 1).join("/");
 
         if (process.env.NODE_ENV === "production") {
             let dirPath = path.posix.join(localFilesPath.replace(/\\+$/, ""), relativePath);
             dirPath = dirPath.replace(/^([A-Za-z]):/, "$1");
-
-            return path.posix.join(process.cwd(), dirPath).replace(/\\/g, "/");;
+            console.log(dirPath)
+            return path.posix.join(process.cwd(), dirPath).replace(/\\/g, "/");
         } else {
             return path.posix.join(localFilesPath, relativePath).replace(/\\/g, "/");
         }

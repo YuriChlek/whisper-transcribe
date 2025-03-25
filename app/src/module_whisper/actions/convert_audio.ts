@@ -1,7 +1,7 @@
 import * as path from "node:path";
 import ffmpegPath from "ffmpeg-static";
 import ffmpeg from "fluent-ffmpeg";
-import { OUTPUT_FILE_PATH } from "@/constants/constants";
+import get_output_audio_path from "@/module_whisper/actions/get_output_audio_path";
 import process from "node:process";
 
 const convert_audio_factory = () => {
@@ -14,8 +14,9 @@ const convert_audio_factory = () => {
         console.error("FFmpeg path is not defined.");
     }
 
-    return async (audioPath: string) => {
-        const outputFile: string = path.join(__app_dir, OUTPUT_FILE_PATH);
+    return async (audioPath: string, model_id: string) => {
+        const output_path = get_output_audio_path(model_id)
+        const outputFile: string = path.join(__app_dir, output_path);
 
         try {
             ffmpeg(audioPath)

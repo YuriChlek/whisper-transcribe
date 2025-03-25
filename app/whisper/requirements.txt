@@ -7,3 +7,5 @@ torch
 torchaudio
 numpy
 pydub
+requests
+librosa
