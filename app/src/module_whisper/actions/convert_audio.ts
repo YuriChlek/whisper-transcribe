@@ -1,24 +1,25 @@
 import * as path from "node:path";
 import ffmpegPath from "ffmpeg-static";
 import ffmpeg from "fluent-ffmpeg";
-import { OUTPUT_FILE_PATH } from "@/constants/constants";
-import format_path from "@/module_whisper/actions/format_path";
+import get_output_audio_path from "@/module_whisper/actions/get_output_audio_path";
+import process from "node:process";
 
 const convert_audio_factory = () => {
     const __app_dir = process.cwd();
 
     if (ffmpegPath) {
-        ffmpeg.setFfmpegPath(ffmpegPath);
+        const ffmPegPath: string = process.env.NODE_ENV === "production" ? "/usr/bin/ffmpeg" : ffmpegPath as string;
+        ffmpeg.setFfmpegPath(ffmPegPath);
     } else {
         console.error("FFmpeg path is not defined.");
     }
 
-    return async (audioPath: string) => {
-        const inputFile: string = format_path(audioPath);
-        const outputFile: string = path.join(__app_dir, OUTPUT_FILE_PATH);
+    return async (audioPath: string, model_id: string) => {
+        const output_path = get_output_audio_path(model_id)
+        const outputFile: string = path.join(__app_dir, output_path);
 
         try {
-            ffmpeg(inputFile)
+            ffmpeg(audioPath)
                 .audioChannels(1)
                 .audioFrequency(16000)
                 .audioCodec("pcm_s16le")
