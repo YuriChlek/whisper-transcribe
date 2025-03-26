@@ -5,7 +5,26 @@
 .form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
+}
+
+.form-label {
+    display: flex;
+    position: relative;
+}
+
+.form-label-ip {
+    flex: 1;
+}
+
+.form-label-checkbox {
+    display: block;
+    text-align: left;
+}
+
+.form-label > .form-input {
+    display: block;
+    width: 100%;
 }
 
 .form-input,
@@ -17,7 +36,8 @@
 }
 
 .form-input-ip {
-    flex: 1;
+    display: block;
+    width: 100%;
 }
 
 .form-input-port {
@@ -43,7 +63,25 @@
     gap: 10px;
 }
 
-.form-label {
-    display: block;
-    text-align: left;
+.label-text {
+    display: inline-block;
+    position: absolute;
+    color: gray;
+    font-size: 14px;
+    line-height: 1;
+    background: #ffffff;
+    padding: 5px;
+    left: 8px;
+    top: 4px;
+    cursor: text;
+    border-radius: 4px;
+    transition: all linear 150ms;
+}
+
+.active > .label-text,
+input:focus + .label-text {
+    top: -10px;
+    font-size: 11px;
+    padding: 4px;
+    cursor: none;
 }
