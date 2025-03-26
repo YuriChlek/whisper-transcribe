@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { clsx } from "clsx";
 import fetchData from "../../utils/fetchData";
 import { Id, toast } from "react-toastify";
 import validateDBConnectionData from "../../utils/validateDbConnecrionData";
@@ -7,7 +8,7 @@ import ButtonBase from "../ButtonBase/ButtonBase";
 import {
     CheckConnectionResponse,
     SettingsData,
-    DbConnectionResponse,
+    DbConnectionResponse
 } from "../../types/frontend_types";
 import { useAppState } from "../../state/state.ts";
 import updateMessage from "../../utils/updateMessage.ts";
@@ -72,7 +73,7 @@ const ConnectionForm: React.FC = () => {
                 setLocalFilesUrl(data.localFilesUrl || "");
 
                 setIsStartedValue(res.start ?? false);
-            },
+            }
         );
     }, []);
 
@@ -80,50 +81,71 @@ const ConnectionForm: React.FC = () => {
         <div className={styles.wrapper}>
             <form className={styles.form}>
                 <div className={styles["form-address-wrapper"]}>
-                    <input
-                        type="text"
-                        disabled={isStarted}
-                        placeholder="IP-адреса"
-                        value={host}
-                        onChange={(e) => setHost(e.target.value)}
-                        className={styles["form-input-ip"]}
-                    />
-                    <input
-                        type="text"
-                        disabled={isStarted}
-                        placeholder="Порт"
-                        value={port}
-                        onChange={(e) => setPort(e.target.value)}
-                        className={styles["form-input-port"]}
-                    />
+                    <label className={
+                        clsx(styles["form-label"],
+                            styles["form-label-ip"],
+                            { [styles["active"]]: host }
+                        )}>
+                        <input
+                            type="text"
+                            disabled={isStarted}
+                            value={host}
+                            onChange={(e) => setHost(e.target.value)}
+                            className={styles["form-input-ip"]}
+                        />
+                        <span className={styles["label-text"]}>IP-адреса</span>
+                    </label>
+                    <label className={clsx(styles["form-label"],
+                        { [styles["active"]]: port }
+                    )}>
+                        <input
+                            type="text"
+                            disabled={isStarted}
+                            value={port}
+                            onChange={(e) => setPort(e.target.value)}
+                            className={styles["form-input-port"]}
+                        />
+                        <span className={styles["label-text"]}>Порт</span>
+                    </label>
                 </div>
-                <input
-                    type="text"
-                    disabled={isStarted}
-                    placeholder="Ім'я користувача"
-                    value={user}
-                    onChange={(e) => setUser(e.target.value)}
-                    className={styles["form-input"]}
-                />
-                <input
-                    type="password"
-                    disabled={isStarted}
-                    placeholder="Пароль"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className={styles["form-input"]}
-                />
-                <input
-                    type="text"
-                    disabled={isStarted}
-                    placeholder="Назва бази даних"
-                    value={database}
-                    onChange={(e) => setDatabase(e.target.value)}
-                    className={styles["form-input"]}
-                />
-
+                <label className={clsx(styles["form-label"],
+                    { [styles["active"]]: user }
+                )}>
+                    <input
+                        type="text"
+                        disabled={isStarted}
+                        value={user}
+                        onChange={(e) => setUser(e.target.value)}
+                        className={styles["form-input"]}
+                    />
+                    <span className={styles["label-text"]}>Ім'я користувача</span>
+                </label>
+                <label className={clsx(styles["form-label"],
+                    { [styles["active"]]: password }
+                )}>
+                    <input
+                        type="password"
+                        disabled={isStarted}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className={styles["form-input"]}
+                    />
+                    <span className={styles["label-text"]}>Пароль</span>
+                </label>
+                <label className={clsx(styles["form-label"],
+                    { [styles["active"]]: database }
+                )}>
+                    <input
+                        type="text"
+                        disabled={isStarted}
+                        value={database}
+                        onChange={(e) => setDatabase(e.target.value)}
+                        className={styles["form-input"]}
+                    />
+                    <span className={styles["label-text"]}>Назва бази даних</span>
+                </label>
                 <div className={styles["files-settings-wrapper"]}>
-                    <label className={styles["form-label"]}>
+                    <label className={styles["form-label-checkbox"]}>
                         <input
                             type="checkbox"
                             disabled={isStarted}
@@ -133,15 +155,18 @@ const ConnectionForm: React.FC = () => {
                         />
                         <span>Файли на локальній машині.</span>
                     </label>
-
+                    <label className={clsx(styles["form-label"],
+                        { [styles["active"]]: database }
+                    )}>
                     <input
                         type="text"
                         disabled={isStarted || !isLocalFiles}
-                        placeholder="Шлях до папки на локальній машині."
                         value={localFilesUrl}
                         onChange={(e) => setLocalFilesUrl(e.target.value)}
                         className={styles["form-input"]}
                     />
+                        <span className={styles["label-text"]}>Шлях до папки на локальній машині</span>
+                    </label>
                 </div>
 
                 <div className={styles["form-button-wrapper"]}>
@@ -157,7 +182,7 @@ const ConnectionForm: React.FC = () => {
                         handler={saveDbConnection}
                         type="button"
                     >
-                    Зберегти налаштування
+                        Зберегти налаштування
                     </ButtonBase>
                 </div>
             </form>
